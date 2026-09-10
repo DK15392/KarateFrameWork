@@ -1,0 +1,13 @@
+Feature: Search the practice software testing store
+
+  Background:
+    * configure driver = { type: 'chrome', headless: true, showDriverLog: true }
+    * configure retry = { count: 10, interval: 500 }
+
+  Scenario: Search for Hammer and capture the result
+    Given driver 'https://practicesoftwaretesting.com/'
+    When input('input[placeholder="Search"]', 'Hammer')
+    And waitForText('body', 'Hammer')
+    Then match driver.text contains 'Hammer'
+    * def hammerSearchScreenshot = screenshot()
+    * karate.write(hammerSearchScreenshot, 'hammer-search.png')

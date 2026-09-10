@@ -78,6 +78,9 @@ web_modules/
 .next
 out
 
+# Maven build and Karate report output
+target/
+
 # Nuxt.js build / generate output
 .nuxt
 dist
