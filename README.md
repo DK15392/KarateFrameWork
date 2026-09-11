@@ -4,7 +4,7 @@ This project searches [Practice Software Testing](https://practicesoftwaretestin
 
 ## Run
 
-Install Microsoft Edge, then run:
+Install Chromium, then run:
 
 ```bash
 mvn test
