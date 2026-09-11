@@ -1,0 +1,43 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  MAVEN_OPTS: '-Dmaven.repo.local=$(Pipeline.Workspace)/.m2/repository'
+
+steps:
+- task: JavaToolInstaller@0
+  displayName: 'Use Java 17'
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+
+- task: Cache@2
+  displayName: 'Cache Maven packages'
+  inputs:
+    key: 'maven | "$(Agent.OS)" | pom.xml'
+    restoreKeys: |
+      maven | "$(Agent.OS)"
+    path: '$(MAVEN_OPTS)'
+
+- task: Maven@4
+  displayName: 'Run Karate tests'
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'test'
+    options: '-B'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.17'
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Karate HTML report'
+  condition: always()
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)/target/karate-reports'
+    artifact: 'karate-report'
+    publishLocation: 'pipeline'
