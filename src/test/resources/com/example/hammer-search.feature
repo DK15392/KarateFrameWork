@@ -1,7 +1,7 @@
 Feature: Search the practice software testing store
 
   Background:
-    * configure driver = { type: 'chrome', headless: true, showDriverLog: true }
+    * configure driver = { type: 'chrome', executable: '/usr/bin/microsoft-edge', headless: true, showDriverLog: true, addOptions: ['--no-sandbox', '--disable-dev-shm-usage'] }
     * configure retry = { count: 10, interval: 500 }
 
   Scenario: Search for Hammer and capture the result
