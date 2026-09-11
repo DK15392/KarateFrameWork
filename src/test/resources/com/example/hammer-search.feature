@@ -6,6 +6,7 @@ Feature: Search the practice software testing store
 
   Scenario: Search for Hammer and capture the result
     Given driver 'https://practicesoftwaretesting.com/'
+    And waitFor('input[placeholder="Search"]')
     When input('input[placeholder="Search"]', 'Hammer')
     And waitForText('body', 'Hammer')
     Then match driver.text contains 'Hammer'
